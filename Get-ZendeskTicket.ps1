@@ -1,6 +1,6 @@
 ﻿<#
 .Synopsis
-   Outputs a list of currently open tickets.
+   Outputs a list of tickets based on the staus selected.
 .DESCRIPTION
    Long description
 .EXAMPLE
@@ -16,11 +16,9 @@
    Another example of how to use this cmdlet
 #>
 
-function Get-ZendeskOpenTicket
+function Get-ZendeskTicket
 {
     [CmdletBinding()]
-    [Alias()]
-    [OutputType([String])]
     Param
     (
         # Username for authentication
@@ -39,15 +37,23 @@ function Get-ZendeskOpenTicket
         [Parameter(Mandatory=$true,
                    ValueFromPipelineByPropertyName=$true,
                    Position=2)]
-        [String]$URL 
+        [String]$URL, 
+
+        # Status of tickets (eg. open, pending, solved, closed, etc.)
+        [Parameter(Mandatory=$false,
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=3)]
+                   [ValidateSet("New", "Open", "Pending", "Hold", "Solved", "Closed")]
+        [String]$Status = "Open"
+
+
    )
 
         $params = @{
-        Uri = "$URL/api/v2/search.json?query=type:ticket status:open";
-        Method = 'GET';
-        Headers = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$($Username):$($Token)"));
-        } #end headers hash table
-        } #end $params hash table
+            Uri = "$URL/api/v2/search.json?query=type:ticket status:$Status";
+            Method = 'GET';
+            Headers = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$($Username):$($Token)"));} 
+        } 
         $Output = Invoke-RestMethod -Uri $params.Uri -Method $params.Method -Headers $params.Headers -ContentType "application/json"
 
         $Output.results

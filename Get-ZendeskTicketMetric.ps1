@@ -6,7 +6,7 @@
 .EXAMPLE
    Get-ZendeskTicketMetric -Username "info@example.com/token" -Token "64hj2824dshdlhnsdin090" -URL "https://testinstance.zendesk.com"
 
-   url                              : https://testinstance.zendesk.com/api/v2/ticket_metrics/1740310
+   url                              : https://testinstance.zendesk.com/api/v2/ticket_metrics/
                                       744.json
    id                               : 1740310744
    ticket_id                        : 1
@@ -34,6 +34,8 @@
 function Get-ZendeskTicketMetric
 {
     [CmdletBinding()]
+    [Alias()]
+    [OutputType([String])]
     Param
     (
         # Username for authentication
@@ -56,11 +58,10 @@ function Get-ZendeskTicketMetric
    )
 
         $params = @{
-        Uri = "$URL/api/v2/ticket_metrics.json";
-        Method = 'GET';
-        Headers = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$($Username):$($Token)"));
-        } #end headers hash table
-        } #end $params hash table
+            Uri = "$URL/api/v2/ticket_metrics.json";
+            Method = 'GET';
+            Headers = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$($Username):$($Token)"));}
+        } 
         $Output = Invoke-RestMethod -Uri $params.Uri -Method $params.Method -Headers $params.Headers -ContentType "application/json"
 
         $Output.ticket_metrics

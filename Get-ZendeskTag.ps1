@@ -38,11 +38,10 @@ function Get-ZendeskTag
    )
 
         $params = @{
-        Uri = "$URL/api/v2/tags.json";
-        Method = 'GET';
-        Headers = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$($Username):$($Token)"));
-        } #end headers hash table
-        } #end $params hash table
+            Uri = "$URL/api/v2/tags.json";
+            Method = 'GET';
+            Headers = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$($Username):$($Token)"));}
+        } 
         $Output = Invoke-RestMethod -Uri $params.Uri -Method $params.Method -Headers $params.Headers -ContentType "application/json"
 
         $Output.tags

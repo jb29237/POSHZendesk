@@ -43,7 +43,7 @@ function Get-ZendeskTicket
         [Parameter(Mandatory=$false,
                    ValueFromPipelineByPropertyName=$true,
                    Position=3)]
-                   [ValidateSet("New", "Open", "Pending", "Hold", "Solved", "Closed")]
+        [ValidateSet("New", "Open", "Pending", "Hold", "Solved", "Closed")]
         [String]$Status = "Open"
 
 

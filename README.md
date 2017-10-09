@@ -1,5 +1,5 @@
 # POSHZendesk
-Powershell rapper for the Zendesk API
+Powershell wrapper for the Zendesk API
 
 This repository sets out to build a Powershell module which leverages the Zendesk API.
 

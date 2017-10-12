@@ -1,4 +1,4 @@
-function InvokeZendeskGet()
+function Invoke-ZendeskGet()
 {
     PARAM(
         [string]$URL,

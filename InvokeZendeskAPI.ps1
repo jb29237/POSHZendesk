@@ -1,22 +1,17 @@
-﻿function InvokeZendeskGet($Endpoint)
+function InvokeZendeskGet()
 {
-    Begin
-    {
-        $params = 
-        @{
-            Uri = "$URL$Endpoint";
-            Method = 'GET';
-            Headers = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$($Username):$($Token)"));}
-        } 
-        
-    }
-    Process
-    {
-        $Output = Invoke-RestMethod -Uri $params.Uri -Method $params.Method -Headers $params.Headers -ContentType "application/json"
-    }
-    End
-    {
-        $Output.tags
-    }
-
+    PARAM(
+        [string]$URL,
+        [string]$Username,
+        [string]$Token
+    )
+          
+    [pscustomobject]$auth = @{
+        Uri = "$URL";
+        Method = 'GET';
+        Headers = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$($Username):$($Token)"));}
+    } 
+   
+    $auth
+   
 }

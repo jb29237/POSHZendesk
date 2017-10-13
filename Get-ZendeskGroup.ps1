@@ -35,28 +35,9 @@ function Get-ZendeskGroup
 
     )
 
-    Begin
-    {
-        $params = @{
-            Uri = "$URL/api/v2/groups.json";
-            Method = 'GET';
-            Headers = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$($Username):$($Token)"));} 
-        }
-    }
-
-    Process
-    {
-            
-        $Output = Invoke-Restmethod -Uri $params.Uri -Method $params.Method -Headers $params.Headers -ContentType "application/json"
-
-        $Output.groups
+    $auth = Invoke-ZendeskGet -URL $URL -Username $Username -Token $Token
     
-    }
+    $Output = Invoke-Restmethod -Uri $auth.Uri -Method $auth.Method -Headers $auth.Headers -ContentType "application/json"
 
-    End
-    {
-
-              
-
-    }
+    $Output.groups
 }

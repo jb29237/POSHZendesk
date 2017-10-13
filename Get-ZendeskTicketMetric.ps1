@@ -56,13 +56,10 @@ function Get-ZendeskTicketMetric
                    Position=2)]
         [String]$URL 
    )
+    
+    $auth = Invoke-ZendeskGet -URL $URL -Username $Username -Token $Token
+   
+    $Output = Invoke-Restmethod -Uri $auth.Uri -Method $auth.Method -Headers $auth.Headers -ContentType "application/json"
 
-        $params = @{
-            Uri = "$URL/api/v2/ticket_metrics.json";
-            Method = 'GET';
-            Headers = @{Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$($Username):$($Token)"));}
-        } 
-        $Output = Invoke-RestMethod -Uri $params.Uri -Method $params.Method -Headers $params.Headers -ContentType "application/json"
-
-        $Output.ticket_metrics
+    $Output.ticket_metrics
 }

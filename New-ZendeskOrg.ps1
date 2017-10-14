@@ -8,7 +8,7 @@
 .EXAMPLE
    Another example of how to use this cmdlet
 #>
-function New-ZendeskUser
+function New-ZendeskOrg
 {
     [CmdletBinding(SupportsShouldProcess=$true)]
     Param
@@ -35,36 +35,28 @@ function New-ZendeskUser
         [Parameter(Mandatory=$false,
                     ValueFromPipelineByPropertyName=$true,
                     Position=0)]
-        [String]$Email,
+        [String]$Details,
 
         # User's First and Last name
         [Parameter(Mandatory=$true,
                     ValueFromPipelineByPropertyName=$true,
                     Position=1)]
-        [String]$Name,
-
-        # Set User role(end-user,agent,admin)
-        [Parameter(Mandatory=$false,
-                    ValueFromPipelineByPropertyName=$true,
-                    Position=2)]
-        [String]$Role = "end-user"
-        
+        [String]$Name
 
     )
 
-    $users = [ordered]@{
-        user = [ordered]@{
+    $organizations = [ordered]@{
+        organization = [ordered]@{
             name = $Name;
-            email = $Email;
-            role = $Role;
+            details = $Details;
         }        
     }
 
-    $json = $users | ConvertTo-Json -Depth 10 -Compress
+    $json = $organizations | ConvertTo-Json -Depth 10 -Compress
 
     Write-Verbose $json
 
-    $endpoint = "/api/v2/users.json"
+    $endpoint = "/api/v2/organizations.json"
 
     $auth = Invoke-ZendeskPost -URL ($URL + $endpoint) -Username $Username -Token $Token
     

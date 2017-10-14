@@ -32,8 +32,10 @@ function Get-ZendeskTrigger
         [String]$URL  
       
     )
+
+    $endpoint = "/api/v2/triggers.json"
     
-    $auth = Invoke-ZendeskGet -URL $URL -Username $Username -Token $Token
+    $auth = Invoke-ZendeskGet -URL ($URL + $endpoint) -Username $Username -Token $Token
     
     $Output = Invoke-Restmethod -Uri $auth.Uri -Method $auth.Method -Headers $auth.Headers -ContentType "application/json"
 

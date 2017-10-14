@@ -41,7 +41,9 @@ function Get-ZendeskTicket
 
    )
 
-    $auth = Invoke-ZendeskGet -URL $URL -Username $Username -Token $Token
+    $endpoint = "/api/v2/tickets.json"
+
+    $auth = Invoke-ZendeskGet -URL ($URL + $endpoint) -Username $Username -Token $Token
    
     $Output = Invoke-Restmethod -Uri $auth.Uri -Method $auth.Method -Headers $auth.Headers -ContentType "application/json"
 

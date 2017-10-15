@@ -1,4 +1,4 @@
-function Invoke-ZendeskPost()
+function Invoke-ZendeskPost
 {
     PARAM(
         [string]$URL,

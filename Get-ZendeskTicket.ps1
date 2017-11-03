@@ -37,11 +37,18 @@ function Get-ZendeskTicket
         [Parameter(Mandatory=$true,
                    ValueFromPipelineByPropertyName=$true,
                    Position=2)]
-        [String]$URL
+        [String]$URL,
+
+        # Status of tickets (eg. open, pending, solved, closed, etc.)
+        [Parameter(Mandatory=$false,
+                   ValueFromPipelineByPropertyName=$true,
+                   Position=3)]
+        [ValidateSet("New", "Open", "Pending", "Hold", "Solved", "Closed")]
+        [String]$Status = "Open"
 
    )
 
-    $endpoint = "/api/v2/tickets.json"
+    $endpoint = "/api/v2/search.json?query=type:ticket status:$Status"
 
     $auth = Invoke-ZendeskGet -URL ($URL + $endpoint) -Username $Username -Token $Token
    

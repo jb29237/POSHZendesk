@@ -54,5 +54,5 @@ function Get-ZendeskTicket
    
     $Output = Invoke-Restmethod -Uri $auth.Uri -Method $auth.Method -Headers $auth.Headers -ContentType "application/json"
 
-    $Output.tickets
+    $Output.results
 }

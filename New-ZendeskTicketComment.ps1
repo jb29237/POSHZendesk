@@ -14,43 +14,44 @@ function New-ZendeskTicketComment
     Param
     (
         # Username for authentication
-        [Parameter(Mandatory=$false,
+        [Parameter(Mandatory=$true,
                     ValueFromPipelineByPropertyName=$true,
                     Position=0)]
         [String]$Username,
 
         # API Token for authentication
-        [Parameter(Mandatory=$false,
+        [Parameter(Mandatory=$true,
                     ValueFromPipelineByPropertyName=$true,
                     Position=1)]
         [String]$Token,
 
         # Zendesk root URL (eg. http://domain.zendesk.com)
-        [Parameter(Mandatory=$false,
+        [Parameter(Mandatory=$true,
                     ValueFromPipelineByPropertyName=$true,
                     Position=2)]
         [String]$URL,
         
-        # Type of ticket(problem,incident,question,task,etc)
-        [Parameter(Mandatory=$false,
+        # Ticket status (open, solved, hold etc)
+        [Parameter(Mandatory=$true,
                     ValueFromPipelineByPropertyName=$true,
                     Position=3)]
+        [ValidateSet("New", "Open", "Pending", "Hold", "Solved", "Closed")]
         [String]$Status,
 
-        # Subject line for ticket
+        # Ticket ID number
         [Parameter(Mandatory=$true,
                     ValueFromPipelineByPropertyName=$true,
                     Position=4)]
         [String]$ID,
 
-        # Set User role(end-user,agent,admin)
-        [Parameter(Mandatory=$false,
+        # Comment string to be posted
+        [Parameter(Mandatory=$true,
                     ValueFromPipelineByPropertyName=$true,
                     Position=5)]
         [String]$Comment,
         
-        # Set User role(end-user,agent,admin)
-        [Parameter(Mandatory=$false,
+        # Public or private comment
+        [Parameter(Mandatory=$true,
                     ValueFromPipelineByPropertyName=$true,
                     Position=6)]
         [Boolean]$Public = $True

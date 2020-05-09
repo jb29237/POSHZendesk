@@ -1,4 +1,4 @@
-# MilkshakeSpoon and I co-created this project to learn contributing to an open source project and build something together
+# MilkshakeSpoon and I co-created this project. We wanted to learn about building an open source project.
 ## POSHZendesk
 
 Powershell wrapper for the Zendesk API
